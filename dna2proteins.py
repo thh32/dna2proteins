@@ -98,10 +98,10 @@ def frame_id(seq,key):
         temp = ''.join([seq[j::]])
         temp_rev = ''.join([seq_rev[j::]])
         seq_trans = swap_dna(temp)
-        print key
+        print key + '--' str(j)
         print seq_trans
         seq_rev_trans = swap_dna(temp_rev)
-        print key
+        print key + '--' + str(j) + '_trans'
         print seq_rev_trans
         if j==0:
             frames['+1']=seq_trans
