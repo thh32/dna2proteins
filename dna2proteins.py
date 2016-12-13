@@ -136,6 +136,7 @@ def rev_seq(seq):
 
 ## Generates all the frames for all the sequences
 
+
 def gen_frames(dictionary):
     all_dict = {}
     for key, value in dictionary.items():
