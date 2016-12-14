@@ -101,21 +101,28 @@ def frame_id(seq,key):
         seq_rev_trans = swap_dna(temp_rev)
 
         #OUTPUT
+        minimum_int = int(minimum)
         if j == 0:
-            f1.write(key + '\n')
-            f1.write(seq_trans + '\n')
-            f2.write(key + '\n')
-            f2.write(seq_rev_trans + '\n')
+            if len(seq_trans.replace('_','')) >= minimum_int:
+                f1.write(key + '\n')
+                f1.write(seq_trans + '\n')
+            if len(seq_rev_trans.replace('_','')) >= minimum_int:
+                f2.write(key + '\n')
+                f2.write(seq_rev_trans + '\n')
         elif j == 1:
-            f3.write(key + '\n')
-            f3.write(seq_trans + '\n')
-            f4.write(key + '\n')
-            f4.write(seq_rev_trans + '\n')  
+            if len(seq_trans.replace('_','')) >= minimum_int:
+                f3.write(key + '\n')
+                f3.write(seq_trans + '\n')
+            if len(seq_rev_trans.replace('_','')) >= minimum_int:
+                f4.write(key + '\n')
+                f4.write(seq_rev_trans + '\n')
         elif j == 2:
-            f5.write(key + '\n')
-            f5.write(seq_trans + '\n')
-            f6.write(key + '\n')
-            f6.write(seq_rev_trans + '\n')          
+            if len(seq_trans.replace('_','')) >= minimum_int:
+                f5.write(key + '\n')
+                f5.write(seq_trans + '\n')
+            if len(seq_rev_trans.replace('_','')) >= minimum_int:
+                f6.write(key + '\n')
+                f6.write(seq_rev_trans + '\n')        
         #print key + '--' + str(j)
         #print seq_trans
         #print key + '--' + str(j) + '_trans'
@@ -199,12 +206,13 @@ import sys, getopt
 def main(argv):
     inputfile = ""
     outputfile = ""
+    minimum = 5
     printprots = False
     print 'Running...'
     try:
-      opts, args = getopt.getopt(argv,"hi:o:p",["ifile=","ofile="])
+      opts, args = getopt.getopt(argv,"hi:o:m:p",["ifile=","ofile=","min="])
     except getopt.GetoptError:
-        print 'dna2proteins.py -i <inputfile> REDIRECT TO OWN FILE -p'
+        print 'dna2proteins.py -i <inputfile> -o <output pattern> -m <minimum protein length> -p'
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
@@ -215,13 +223,15 @@ def main(argv):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
+        elif opt in ("-m", "--min"):
+            outputfile = arg
         elif opt == "-p":
             printprots = True
 
-    return inputfile, outputfile, printprots
+    return inputfile, outputfile,minimum, printprots
 
 if __name__ == "__main__":
-   inputfile, outputfile, printprots = main(sys.argv[1:])
+   inputfile, outputfile,minimum, printprots = main(sys.argv[1:])
 
 print 'Reading in file'
 sequences = read_fasta(inputfile)
