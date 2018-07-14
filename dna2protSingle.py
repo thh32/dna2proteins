@@ -48,7 +48,7 @@ def main(argv):
     printprots = False
 
     try:
-      opts, args = getopt.getopt(argv,"hi:o:k:p",["ifile=","ofile=","names="])
+      opts, args = getopt.getopt(argv,"hi:o:k:p",["ifile=","ofile="])
     except getopt.GetoptError:
         print 'dna2prot4u.py -i <inputfile> REDIRECT TO OWN FILE -p'
         sys.exit(2)
@@ -61,17 +61,15 @@ def main(argv):
             inputfile = arg
         elif opt in ("-o", "--ofile"):
             outputfile = arg
-        elif opt in ("-k", "--names"):
-            naming = arg
         elif opt == "-p":
             printprots = True
 
-    return inputfile, outputfile, naming, printprots
+    return inputfile, outputfile, printprots
 
 
 
 if __name__ == "__main__":
-   inputfile, outputfile, naming, printprots = main(sys.argv[1:])
+   inputfile, outputfile, printprots = main(sys.argv[1:])
 
 
 
@@ -80,6 +78,6 @@ for read in HTSeq.FastaReader(inputfile):
     name = read.name
     DNA = read.seq
     Prot = swap_dna(DNA)
-    outputting.write('>' + naming + '--' + name + '--' + '\n')
+    outputting.write('>' + name + '\n')
     outputting.write(Prot + '\n')
 outputting.close()
